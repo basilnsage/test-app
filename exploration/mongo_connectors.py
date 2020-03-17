@@ -1,3 +1,4 @@
+import bson
 import urllib
 
 
@@ -43,16 +44,32 @@ class MongoCollection:
         self.name = collection
         self.collection = database[collection]
 
+    def get_collection(self):
+        return self.collection
+
     def insert(self, doc):
         if '_id' in doc:
             raise ValueError('cannot insert document with custom _id')
         self.collection.insert_one(doc)
+        self.collection.update_one(
+            doc,
+            {
+                '$currentDate': {
+                    'meta.createdAt': True,
+                    'meta.updatedAt': True
+                }
+            },
+            upsert=True
+        )
 
-    def get_by_name_desc(self, name, desc=''):
-        self.collection.find_one({
-            'name': name,
-            'description': desc
-        })
+    def get_by_name(self, name):
+        return self.collection.find_one({'name': name})
 
     def update_name(self, oid, new_name):
-        pass
+        self.collection.update_one(
+            {'_id': oid},
+            {
+                '$set': {'name': new_name},
+                '$currentDate': {'meta.updatedAt': True}
+            }
+        )
