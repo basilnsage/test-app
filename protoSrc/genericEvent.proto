@@ -1,0 +1,11 @@
+syntax = "proto3";
+package testApp;
+
+option go_package = "protoTarget/genericEvent";
+
+message Event {
+    string title = 1;
+    string body = 2;
+    int64 created_at = 3;
+    string uuid = 4;
+}
