@@ -4,17 +4,14 @@ import axios from 'axios';
 export default () => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [author, setAuthor] = useState('');
     const onSubmit = async (event) => {
         event.preventDefault();
         await axios.post("http://localhost:8000/posts", {
             title,
             body,
-            author,
         });
         setTitle("");
         setBody("");
-        setAuthor("");
     }
     return (
         <div>
@@ -30,12 +27,6 @@ export default () => {
                     <input
                         value={body}
                         onChange={e => setBody(e.target.value)}
-                        className="form-control"
-                    />
-                    <label>Author</label>
-                    <input
-                        value={author}
-                        onChange={e => setAuthor(e.target.value)}
                         className="form-control"
                     />
                 </div>
