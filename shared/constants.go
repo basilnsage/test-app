@@ -12,6 +12,7 @@ type (
 	}
 	CommentJson struct {
 		Body      string `json:"body" binding:"required"`
+		Status string `json:"status"`
 		CreatedAt int64  `json:"createdAt"`
 		ID        string `json:"id"`
 	}
