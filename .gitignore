@@ -2,3 +2,8 @@
 __pycache__/
 venv/
 node_modules/
+postService/postService
+commentService/commentService
+queryService/queryService
+moderationService/moderationService
+eventBus/eventBus
