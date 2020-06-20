@@ -15,18 +15,19 @@ import (
 )
 
 var (
-	posts = make(map[uuid.UUID]shared.PostJson)
+	posts    = make(map[uuid.UUID]shared.PostJson)
 	eventBus = "http://localhost:8100/event"
 )
 
 func main() {
+	log.Print("update 1102")
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost:*"},
+		AllowOrigins:  []string{"http://localhost:*"},
 		AllowWildcard: true,
-		AllowMethods: []string{"GET", "POST"},
-		AllowHeaders: []string{"Origin", "Content-Type"},
-		MaxAge: 12 * time.Hour,
+		AllowMethods:  []string{"GET", "POST"},
+		AllowHeaders:  []string{"Origin", "Content-Type"},
+		MaxAge:        12 * time.Hour,
 	}))
 	router.POST("/event", func(ctx *gin.Context) {
 		ctx.Status(http.StatusOK)
@@ -45,10 +46,10 @@ func main() {
 		event := &protos.GenericEvent{}
 		event.Type = "createPost"
 		event.PostData = &protos.PostEvent{
-			Title: post.Title,
-			Body: post.Body,
+			Title:     post.Title,
+			Body:      post.Body,
 			CreatedAt: createdAt,
-			Uuid: id.String(),
+			Uuid:      id.String(),
 		}
 		eventBytes, err := proto.Marshal(event)
 		if err != nil {
@@ -67,16 +68,16 @@ func main() {
 	router.GET("/posts/:postId", func(ctx *gin.Context) {
 		if postId, err := uuid.Parse(ctx.Param("postId")); err == nil {
 			if post, postFound := posts[postId]; postFound {
-				ctx.JSON(http.StatusOK, gin.H {
+				ctx.JSON(http.StatusOK, gin.H{
 					"post": post,
 				})
 			} else {
-				ctx.JSON(http.StatusNotFound, gin.H {
+				ctx.JSON(http.StatusNotFound, gin.H{
 					"error": "post not found",
 				})
 			}
 		} else {
-			ctx.JSON(http.StatusBadRequest, gin.H {
+			ctx.JSON(http.StatusBadRequest, gin.H{
 				"error": "malformed postId",
 			})
 		}
@@ -86,12 +87,12 @@ func main() {
 		for _, value := range posts {
 			postsArray = append(postsArray, value)
 		}
-		ctx.JSON(200, gin.H {
+		ctx.JSON(200, gin.H{
 			"posts": postsArray,
 		})
 	})
 	router.GET("/hello", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H {
+		ctx.JSON(200, gin.H{
 			"hello": "world",
 		})
 	})
