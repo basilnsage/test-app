@@ -1,0 +1,30 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-svc
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+    - host: posts.com
+      http:
+        paths:
+          - path: /post
+            backend:
+              serviceName: posts-svc
+              servicePort: 8000
+          - path: /posts
+            backend:
+              serviceName: query-svc
+              servicePort: 8002
+          - path: /posts/?(.*)/comments
+            backend:
+              serviceName: comments-svc
+              servicePort: 8001
+          - path: /
+            backend:
+              serviceName: frontend-svc
+              servicePort: 3000
+...

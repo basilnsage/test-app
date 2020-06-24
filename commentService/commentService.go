@@ -80,7 +80,7 @@ func main() {
 				ctx.String(http.StatusInternalServerError, "unable to marshal updateComment event")
 				return
 			}
-			resp, err := http.Post("http://localhost:8100/event", "application/octet-stream", bytes.NewReader(updatedData))
+			resp, err := http.Post("http://ebus-svc:8100/event", "application/octet-stream", bytes.NewReader(updatedData))
 			status, err := shared.RespErrorCheck(resp, err)
 			if err != nil {
 				ctx.String(status, err.Error())
@@ -124,10 +124,10 @@ func main() {
 		}
 		comments[id] = comment
 		commentsByPost[postId] = comments
-		resp, err := http.Post("http://localhost:8100/event", "application-octet-stream", bytes.NewReader(eventBytes))
+		resp, err := http.Post("http://ebus-svc:8100/event", "application-octet-stream", bytes.NewReader(eventBytes))
 		_, err = shared.RespErrorCheck(resp, err)
 		if err != nil {
-			log.Print("[ERROR] - a downstream issue happened during comment creation, error: %s", err.Error())
+			log.Printf("[ERROR] - a downstream issue happened during comment creation, error: %s", err.Error())
 		}
 		ctx.JSON(http.StatusOK, gin.H{"comment": comment})
 	})

@@ -137,7 +137,7 @@ func main() {
 	})
 
 	log.Print("checking for events")
-	resp, err := http.Get("http://localhost:8100/events")
+	resp, err := http.Get("http://ebus-svc:8100/events")
 	if err != nil {
 		log.Printf("unable to sync events: %s", err.Error())
 	} else {

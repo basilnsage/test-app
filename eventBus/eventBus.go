@@ -3,21 +3,21 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/basilnsage/test-app/shared"
 	"log"
 	"net/http"
 	"time"
 
+	"github.com/basilnsage/test-app/shared"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 var (
 	subbedSvcs = []string{
-		"http://localhost:8000/event",
-		"http://localhost:8001/event",
-		"http://localhost:8002/event",
-		"http://localhost:8003/event",
+		"http://posts-svc:8000/event",
+		"http://comments-svc:8001/event",
+		"http://query-svc:8002/event",
+		"http://moderation-svc:8003/event",
 	}
 	events = make([][]byte, 0)
 )

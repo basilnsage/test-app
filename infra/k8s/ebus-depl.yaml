@@ -2,31 +2,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: posts-depl
+  name: ebus-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: posts
+      app: ebus
   template:
     metadata:
       labels:
-        app: posts
+        app: ebus
     spec:
       containers:
-        - name: posts
-          image: basilnsage/test-app.posts
+        - name: ebus
+          image: basilnsage/test-app.event-bus
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: posts-svc
+  name: ebus-svc
 spec:
   selector:
-    app: posts
+    app: ebus
   ports:
-    - name: posts
+    - name: ebus
       protocol: TCP
-      port: 8000
-      targetPort: 8000
+      port: 8100
+      targetPort: 8100
 ...

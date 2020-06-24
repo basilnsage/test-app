@@ -48,7 +48,7 @@ func main() {
 				ctx.String(http.StatusInternalServerError, "unable to marshal response")
 				return
 			}
-			resp, err := http.Post("http://localhost:8100/event", "application/octet-stream", bytes.NewReader(wireframe))
+			resp, err := http.Post("http://ebus-svc:8100/event", "application/octet-stream", bytes.NewReader(wireframe))
 			status, err := shared.RespErrorCheck(resp, err)
 			if err != nil {
 				ctx.String(status, err.Error())

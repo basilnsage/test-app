@@ -16,7 +16,7 @@ import (
 
 var (
 	posts    = make(map[uuid.UUID]shared.PostJson)
-	eventBus = "http://localhost:8100/event"
+	eventBus = "http://ebus-svc:8100/event"
 )
 
 func main() {
@@ -32,7 +32,7 @@ func main() {
 	router.POST("/event", func(ctx *gin.Context) {
 		ctx.Status(http.StatusOK)
 	})
-	router.POST("/posts", func(ctx *gin.Context) {
+	router.POST("/post", func(ctx *gin.Context) {
 		post := shared.PostJson{}
 		err := ctx.Bind(&post)
 		if err != nil {
